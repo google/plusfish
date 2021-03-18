@@ -1,0 +1,14 @@
+// Contains the plusfish severity enum.
+
+syntax = "proto2";
+
+package plusfish;
+
+enum Severity {
+  UNKNOWN = 0;
+  CRITICAL = 1;  // Code execution.
+  HIGH = 2;      // XSS and other injection issues.
+  MODERATE = 3;  // Mixed content, interesting info leaks
+  LOW = 4;       // Non-trivial exploitable issues.
+  MINIMAL = 5;   // Nitpicking.
+};

@@ -1,0 +1,67 @@
+request <
+  port: 80
+  host: "www.example.com"
+  ssl: false
+  url: "http://www.example.com:80/foo"
+  method: GET
+  path <
+    name: "/"
+    value: "foo"
+  >
+>
+
+request <
+  port: 443
+  host: "www.example.com"
+  url: "https://www.example.com:443/foo"
+  ssl: true
+  method: GET
+  path <
+    name: "/"
+    value: "foo"
+  >
+>
+
+request <
+  port: 443
+  host: "www.example.com"
+  url: "https://www.example.com:443/login"
+  ssl: true
+  method: POST
+  path <
+    name: "/"
+    value: "login"
+  >
+  body_param <
+    name: "email"
+    value: "me@example.com"
+   >
+  body_param <
+    name: "password"
+    value: "1ns3cur3"
+   >
+>
+
+
+request <
+  port: 80
+  host: "www.example.com"
+  ssl: false
+  url: "http://www.example.com:80/foo?aa=bb&cc=dd"
+  method: GET
+  path <
+    name: "/"
+    value: "foo"
+  >
+  param <
+    name: "aa"
+    value: "bb"
+
+  >
+  param <
+    name: "cc"
+    value: "dd"
+
+  >
+>
+

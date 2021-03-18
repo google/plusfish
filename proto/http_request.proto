@@ -1,0 +1,83 @@
+// Protobuf messages for plusfish.
+
+syntax = "proto2";
+
+package plusfish;
+
+// General request metadata.
+message MetaData {
+  enum Type {
+    UNKNOWN_TYPE = 0;
+    AVERAGE_APPLICATION_TIME_USEC = 1;
+  }
+
+  // What is stored.
+  optional Type value_type = 1;
+  // The actual value.
+  optional int64 value = 2;
+}
+
+// Represents a parsed HTTP request.
+// TODO: when stable, merge this message with webendpoint.proto.
+message HttpRequest {
+  enum ValueType {
+    UNKNOWN = 0;
+    STRING = 1;
+    NUMBER = 2;
+    JSON = 3;
+  };
+
+  enum RequestMethod {
+    EMPTY = 0;
+    GET = 1;
+    HEAD = 2;
+    OPTIONS = 3;
+    POST = 4;
+    PUT = 5;
+    TRACE = 6;
+  };
+
+  // Generic request field.
+  message RequestField {
+    optional string name = 1;
+    optional string value = 2;
+    optional ValueType type = 3;
+    // Indicates whether the value of this field has been modified
+    // (e.g. a payload is injected here).
+    optional bool modified = 4;
+  }
+
+  ////// The parsed request fields.
+  repeated RequestField header = 1;      // The request headers.
+  repeated RequestField param = 2;       // URL parameters.
+  repeated RequestField body_param = 3;  // Body (POST) parameters.
+  repeated RequestField fragment = 4;    // URL fragments.
+  repeated RequestField path = 5;        // URL path elements.
+  optional int32 port = 6;               // Request port.
+  optional string host = 7;              // Name of the (virtual) host.
+  optional string ip = 8;                // IP of the host.
+  optional bool ssl = 9;                 // SSL protected, or not.
+  optional RequestMethod method = 10 [default = GET];  // The HTTP method.
+  optional string url = 11;                            // The absolute URL.
+
+  // Request metadata.
+  repeated MetaData metadata = 12;
+  // TODO: move time fields below into the metadata.
+  // Total time needed to get a response.
+  optional int64 client_time_total_usec = 20;
+  // Total time measured after the request was given to the application.
+  optional int64 client_time_application_usec = 21;
+  // The time the request was completed (e.g. a response is available).
+  optional int64 client_completion_time_ms = 22;
+
+  ////// Raw data fields.
+  //
+  // The following fields hold unparsed data.
+  optional string raw_url = 51;  // Raw URL (can be relative).
+  optional string raw_request = 52;
+  optional string raw_fragment = 53;
+}
+
+message HttpRequestCollection {
+  repeated HttpRequest request = 1;
+}

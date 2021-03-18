@@ -1,0 +1,50 @@
+# Copyright 2020 Google LLC. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+cmake_minimum_required(VERSION 3.10)
+
+set (CMAKE_CXX_STANDARD 11)
+
+include("../abseil.cmake")
+
+include_directories(./ ../ ../opensource/deps/ ${abseil_SOURCE_DIR}
+  ${googleurl_SOURCE_DIR} ../opensource/deps/third_party/)
+
+set(SOURCES
+    html_scraper.h
+    html_scraper.cc
+    html_parser.h
+    gumbo_xss_filter.h
+    gumbo_xss_filter.cc
+    gumbo_url_filter.h
+    gumbo_url_filter.cc
+    gumbo_form_filter.h
+    gumbo_form_filter.cc
+    gumbo_fingerprint_filter.h
+    gumbo_fingerprint_filter.cc
+    gumbo_filter.h
+    gumbo_parser.h
+    gumbo_parser.cc
+    util/scrape_util.h
+    util/scrape_util.cc
+    util/html_name.h
+    util/escaping.h
+    util/escaping.cc
+  )
+add_library(parsers ${SOURCES})
+target_link_libraries(parsers)
+
+
+
+

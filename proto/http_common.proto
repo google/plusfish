@@ -1,0 +1,61 @@
+// Common protobufs for plusfish.
+
+syntax = "proto2";
+
+package plusfish;
+
+message MimeInfo {
+  // A common set of mime types as used in skipfish. The comment field
+  // behind the enum value contains one or two example strings.
+  // Next ID: 45
+  enum MimeType {
+    UNKNOWN_MIME = 0;
+    ASC_GENERIC = 1;       // text/plain
+    ASC_HTML = 2;          // text/html
+    ASC_JAVASCRIPT = 3;    // text/javascript
+    ASC_CSS = 4;           // text/css
+    ASC_JSON = 5;          // text/json
+    ASC_RTF = 6;           // text/rtf, application/rtf
+    XML_GENERIC = 7;       // text/xml, application/xml
+    XML_OPENSEARCH = 8;    // application/opensearchdescription+xml
+    XML_RSS = 9;           // application/rss+xml
+    XML_ATOM = 10;         // application/atom+xml
+    XML_WML = 11;          // text/vnd.wap.wml
+    XML_CROSSDOMAIN = 12;  // text/x-cross-domain-policy
+    XML_SVG = 13;          // image/svg+xml
+    XML_XHTML = 14;        // application/xhtml+xml
+    IMG_JPEG = 15;         // image/jpeg
+    IMG_GIF = 16;          // image/gif
+    IMG_PNG = 17;          // image/png
+    IMG_BMP = 18;          // image/x-ms-bmp, image/bmp, image/x-icon
+    IMG_TIFF = 19;         // image/tiff
+    IMG_ANI = 20;          // application/x-navi-animation
+    AV_WAV = 21;           // audio/x-wav, audio/wav
+    AV_MP3 = 22;           // audio/mpeg
+    AV_OGG = 23;           // application/ogg
+    AV_RA = 24;            // audio/vnd.rn-realaudio
+    AV_AVI = 25;           // video/avi
+    AV_MPEG = 26;          // video/mpeg, video/mp4
+    AV_QT = 27;            // video/quicktime
+    AV_FLV = 28;           // video/flv, video/x-flv
+    AV_RV = 29;            // video/vnd.rn-realvideo
+    AV_WMEDIA = 30;        // video/x-ms-wmv, audio/x-ms-wma
+    EXT_FLASH = 31;        // application/x-shockwave-flash
+    EXT_PDF = 32;          // application/pdf
+    EXT_JAR = 33;          // application/java-archive
+    EXT_CLASS = 34;        // application/java-vm
+    EXT_WORD = 35;         // application/msword
+    EXT_EXCEL = 36;        // application/vnd.ms-excel
+    EXT_PPNT = 37;         // application/vnd.ms-powerpoint
+    BIN_ZIP = 38;          // application/zip, application/x-zip-compressed
+    BIN_GZIP = 39;         // application/x-gzip, application/x-gunzip
+    BIN_CAB = 40;          // application/vnd.ms-cab-compressed
+    APP_GENERIC = 41;      // application/binary
+    APP_OCTET = 42;        // application/octet-stream
+    APP_UNKNOWN = 43;      // application/unknown
+    APP_JAVASCRIPT = 44;   // application/javascript
+    APP_XJAVASCRIPT = 45;  // application/x-javascript
+    APP_JSON = 46;         // application/json
+    APP_POSTSCRIPT = 47;   // application/postscript
+  };
+}

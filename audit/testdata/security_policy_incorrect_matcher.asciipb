@@ -1,0 +1,25 @@
+# This test has an incorrect matching_rule: the header name is missing.
+security_test <
+  generator_rule <
+    method: SET_VALUE
+    encoding: URL
+
+    target <
+      type: URL_PARAMS
+    >
+
+    payload <
+      type: STRING
+      arg: "foo"
+    >
+  >
+  allow_serial_evaluation: true
+  matching_rule <
+    condition <
+      target: RESPONSE_HEADER_VALUE
+      match <
+        value: "foobar"
+      >
+    >
+  >
+>

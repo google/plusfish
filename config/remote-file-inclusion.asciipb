@@ -1,0 +1,48 @@
+# This configuration holds security checks for remote file inclusion
+# vulnerabilities.
+#
+security_test <
+  name: "remote file inclusion"
+  issue_type: FILE_INCLUSION_REMOTE
+
+  generator_rule <
+    method: SET_VALUE
+    method: PREFIX_VALUE
+    encoding: URL
+
+    target <
+      type: PATH_ELEMENTS
+      last_field_only: true
+    >
+    target <
+      type: URL_PARAMS
+    >
+    target <
+      type: BODY_PARAMS
+    >
+
+    payload <
+      type: STRING
+      arg: "http://www.google.com/humans.txt?"
+    >
+  >
+
+  matching_rule <
+    condition <
+      target: RESPONSE_BODY
+
+      match <
+        method: CONTAINS
+        value: "like to help us out, see google.com/careers"
+      >
+    >
+  >
+
+  allow_serial_evaluation: true
+  advisory <
+    severity: HIGH
+    title: "Remote file inclusion is possible."
+    description: ""
+    recommendation: ""
+  >
+>

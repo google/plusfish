@@ -1,0 +1,10 @@
+method: SET_VALUE
+encoding: NONE
+target <
+  type: BODY_PARAMS
+>
+payload <
+  type: STRING
+  arg: "../../../etc/passwd"
+  arg: "/etc/passwd"
+>

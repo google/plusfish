@@ -1,0 +1,9 @@
+method: APPEND_TO_VALUE
+encoding: NONE
+target <
+  type: PATH_ELEMENTS
+>
+payload <
+  type: STRING
+  arg: "<XSS>"
+>

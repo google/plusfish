@@ -1,0 +1,10 @@
+method: SET_VALUE
+encoding: NONE
+target <
+  type: HEADERS
+  target_name: "user-agent"
+>
+payload <
+  type: STRING
+  arg: "payload_value"
+>

@@ -1,0 +1,80 @@
+// Protobuf messages for plusfish.
+
+syntax = "proto2";
+
+import "http_common.proto";
+
+package plusfish;
+
+// Represents a parsed HTTP response.
+message HttpResponse {
+  // HTTP response codes as seen in Chromium's http_status_code_list.h file.
+  enum ResponseCode {
+    UNKNOWN_CODE = 0;
+    // Informational
+    CONTINUE = 100;   // Continue
+    SWITCHING = 101;  // Switching Protocols
+
+    // Success
+    OK = 200;                 // OK
+    CREATED = 201;            // Created
+    ACCEPTED = 202;           // Accepted
+    NON_AUTHORITATIVE = 203;  // Non-Authoritative Information
+    NO_CONTENT = 204;         // No Content
+    RESET_CONTENT = 205;      // Reset Content
+    PARTIAL_CONTENT = 206;    // Partial Content
+
+    // Redirect
+    MULTIPLE_CHOISES = 300;  // Multiple Choices
+    MOVED_PERM = 301;        // Moved Permanently
+    MOVED_TEMP = 302;        // Found
+    SEE_OTHER = 303;         // See Other
+    NOT_MODIFIED = 304;      // Not Modified
+    USE_PROXY = 305;         // Use Proxy
+    TEMP_REDIRECT = 307;     // More or less like 302
+
+    // Client error
+    BAD_REQUEST = 400;                    // Bad Request
+    UNAUTHORIZED = 401;                   // Unauthorized
+    PAYMENT_REQUIRED = 402;               // Payment Required
+    FORBIDDEN = 403;                      // Forbidden
+    NOT_FOUND = 404;                      // Not Found
+    METHOD_NOT_ALLOWED = 405;             // Method Not Allowed
+    NOT_ACCEPTABLE = 406;                 // Not Acceptable
+    PROXY_AUTHENTICATION_REQUIRED = 407;  // Proxy Authentication Required
+    REQUEST_TIMEOUT = 408;                // Request Time-out
+    CONFLICT = 409;                       // Conflict
+    GONE = 410;                           // Gone
+    LENGTH_REQUIRED = 411;                // Length Required
+    PRECOND_FAILED = 412;                 // Precondition Failed
+    ENTITY_TOO_BIG = 413;                 // Request Entity Too Large
+    URI_TOO_BIG = 414;                    // Request-URI Too Large
+    UNKNOWN_MEDIA = 415;                  // Unsupported Media Type
+    BAD_RANGE = 416;                      // Requested range not satisfiable
+    BAD_EXPECTATION = 417;                // Expectation Failed
+
+    // Server error
+    INTERNAL_SERVER_ERROR = 500;  // Internal Server Error
+    NOT_IMPLEMENTED = 501;        // Not Implemented
+    BAD_GATEWAY = 502;            // Bad Gateway
+    SERVICE_UNAVAILABLE = 503;    // Service Unavailable
+    GATEWAY_TIMEOUT = 504;        // Gateway Time-out
+    BAD_VERSION = 505;            // HTTP Version not supported
+  };
+
+  // Generic HTTP header where name contains the value before the ':' and value
+  // contains the raw string following the ':'.
+  message HeaderField {
+    optional string name = 1;
+    optional string value = 2;
+  }
+
+  // The server response code.
+  optional ResponseCode code = 1;
+  // The response content mime type.
+  optional MimeInfo.MimeType mime_type = 2;
+  // The parsed response headers (name/value pairs).
+  repeated HeaderField header = 3;
+  // Response body (no headers).
+  optional string response_body = 4;
+}

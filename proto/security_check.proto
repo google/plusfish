@@ -1,0 +1,34 @@
+// Messages that describe security tests.
+
+syntax = "proto2";
+
+import "advisory.proto";
+import "generator.proto";
+import "issue_details.proto";
+import "matching.proto";
+
+package plusfish;
+
+// Groups the request generation and response evaluation.
+message SecurityTest {
+  // The name of the test. The chosen name must be unique in the checks
+  // configuration and used to lookup this test.
+  optional string name = 1;
+  // The type of issues this check detects.
+  optional IssueDetails.IssueType issue_type = 2;
+  // The rule for generating test requests.
+  optional GeneratorRule generator_rule = 3;
+  // Whether or not results can be evaluated in serial. If set to false, the
+  // results will only be evaluated once all responses have been received.
+  optional bool allow_serial_evaluation = 4;
+  // The match rule defines how the response evaluation will be performed.
+  // Tests that implement the response matching in code themselves do not need
+  // to define a rule.
+  optional MatchRule matching_rule = 5;
+  // The advisory details for this security test.
+  optional Advisory advisory = 6;
+}
+
+message SecurityCheckConfig {
+  repeated SecurityTest security_test = 1;
+}

@@ -1,0 +1,63 @@
+// Hold messages that describe plusfish issues.
+syntax = "proto2";
+
+import "http_request.proto";
+import "http_response.proto";
+import "severity.proto";
+
+package plusfish;
+
+message IssueDetails {
+  enum IssueType {
+    INVALID = 0;
+    // Varies XSS types.
+    XSS_REFLECTED = 1;
+    XSS_REFLECTED_TAG = 2;
+    XSS_REFLECTED_ATTRIBUTE = 3;
+    XSS_REFLECTED_JAVASCRIPT = 4;
+    XSS_STORED = 5;
+    reserved 6, 7, 8, 9;
+    FILE_INCLUSION_LOCAL = 10;
+    FILE_INCLUSION_REMOTE = 11;
+    MIXED_CONTENT = 12;
+    CRLF_INJECTION = 13;
+    SHELL_INJECTION = 14;
+    PLAINTEXT_LOGIN_FORM = 15;
+    PLAINTEXT_LOGIN_FORM_TARGET = 16;
+    GENERIC_MIME = 17;
+    TEMPLATE_INJECTION = 18;
+    SQL_INJECTION = 19;
+    BLIND_SQL_INJECTION = 20;
+    BLIND_SHELL_INJECTION = 21;
+    XSRF_PASSIVE = 22;
+    OBJECT_FOUND = 23;
+    // Passive detections.
+    INFORMATION_LEAK = 50;
+    STACKTRACE_LEAK = 51;
+    SOURCE_CODE_MIME = 52;
+    APPLICATION_ERROR = 53;
+    // Operational issues.
+    SLOW_SERVER = 80;
+  };
+
+  // The type of issue.
+  optional IssueType type = 1;
+  // The name of the issue detected which should match with the unique name of
+  // the security test performed. Must be unique per SecurityCheckConfig.
+  optional string issue_name = 2;
+  // The request that resulted in the detection.
+  optional HttpRequest request = 3;
+  // The resulting response.
+  optional HttpResponse response = 4;
+  // The severity for this specific issue.
+  optional Severity severity = 5;
+  // The Request ID which is used only if the original request is unknown.
+  optional int64 request_id = 6;
+  // Provides additional information about the discovery. E.g. for XSS vulns,
+  // this can clarify how the XSS whas found.
+  optional string extra_info = 7;
+  // A response snippet that contains content relevant for the reported issue.
+  optional string response_snippet = 8;
+  // A number bytes in the response where the issue was detected.
+  optional int64 response_body_offset = 9;
+}

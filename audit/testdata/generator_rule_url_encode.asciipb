@@ -1,0 +1,11 @@
+method: SET_VALUE
+encoding: URL
+target <
+  type: URL_PARAMS
+  target_name: "file"
+>
+payload <
+  type: STRING
+  arg: "../etc/passwd"
+  arg: "/etc/passwd"
+>

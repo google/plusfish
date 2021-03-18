@@ -1,0 +1,106 @@
+# This configuration holds security checks for file disclosure
+# vulnerabilities on unix-like systems.
+#
+security_test <
+  name: "directory traversal"
+  issue_type: FILE_INCLUSION_LOCAL
+
+  generator_rule <
+    method: APPEND_TO_VALUE
+    method: SET_VALUE
+    method: PREFIX_VALUE
+    encoding: NONE
+    encoding: URL
+    encoding: HTML
+
+    target <
+      type: PATH_ELEMENTS
+      last_field_only: true
+    >
+    target <
+      type: URL_PARAMS
+    >
+    target <
+      type: BODY_PARAMS
+    >
+
+    payload <
+      type: STRING
+      arg: "/etc/passwd"
+      arg: "/etc/passwd?"
+      arg: "/etc/passwd%00"
+      arg: "../../../../../../../../../../../../../../etc/passwd"
+      arg: "/../../../../../../../../../../../../../../etc/passwd%00"
+      arg: "/../../../../../../../../../../../../../../etc/passwd?"
+    >
+  >
+
+  matching_rule <
+    condition <
+      target: RESPONSE_BODY
+      match <
+        method: CONTAINS
+        value: "root:x:0:0:root"
+        value: "root:!:0:0:root"
+        value: "root&#x3a;x&#x3a;0&#x3a;0&#x3a;root&#x3a;&#x2f;root&"
+        value: "root&#x3a;&#21;&#x3a;0&#x3a;0&#x3a;root&#x3a;&#x2f;root&"
+      >
+    >
+  >
+
+  allow_serial_evaluation: true
+  advisory <
+    severity: HIGH
+    title: "A directory traversal vulnerability was detected."
+    description: ""
+    recommendation: ""
+  >
+>
+
+security_test <
+  name: "URL file disclosure"
+  issue_type: FILE_INCLUSION_LOCAL
+
+  generator_rule <
+    method: SET_VALUE
+    method: PREFIX_VALUE
+    encoding: NONE
+    encoding: URL
+    encoding: HTML
+
+    target <
+      type: URL_PARAMS
+    >
+    target <
+      type: BODY_PARAMS
+    >
+
+    payload <
+      type: STRING
+      arg: "file:///etc/passwd"
+      arg: "file:///etc/passwd%00"
+      arg: "file:///etc/passwd?"
+    >
+  >
+
+  matching_rule <
+    condition <
+      target: RESPONSE_BODY
+      match <
+        method: CONTAINS
+        value: "root:x:0:0:root"
+        value: "root:!:0:0:root"
+        value: "root&#x3a;x&#x3a;0&#x3a;0&#x3a;root&#x3a;&#x2f;root&"
+        value: "root&#x3a;&#21;&#x3a;0&#x3a;0&#x3a;root&#x3a;&#x2f;root&"
+      >
+    >
+  >
+
+  allow_serial_evaluation: true
+  advisory <
+    severity: HIGH
+    title: "System files can be disclosed using the file:// URL scheme."
+    description: ""
+    recommendation: ""
+  >
+>

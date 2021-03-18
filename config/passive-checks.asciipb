@@ -1,0 +1,191 @@
+# Contains a collection of passive checks.
+
+security_test <
+  name: "generic content type"
+  issue_type: GENERIC_MIME
+
+  matching_rule <
+    # Matches positive when one of the generic mime types is present.
+    # Unless one of the following headers is present:
+    #   X-Content-Type-Options: nosniff
+    #   Content-Disposition: attachment
+
+    condition <
+      field: "Content-Type"
+      target: RESPONSE_HEADER_VALUE
+
+      match <
+        method: CONTAINS
+        case_insensitive: true
+        value: "text/plain"
+        value: "application/unknown"
+        value: "application/binary"
+        value: "application/octet-stream"
+      >
+    >
+
+    condition <
+      field: "X-Content-Type-Options"
+      target: RESPONSE_HEADER_VALUE
+
+      match <
+        method: CONTAINS
+        value: "nosniff"
+        case_insensitive: true
+        negative_match: true
+      >
+    >
+
+    condition <
+      field: "Content-Disposition"
+      target: RESPONSE_HEADER_VALUE
+
+      match <
+        method: CONTAINS
+        value: "attachment"
+        case_insensitive: true
+        negative_match: true
+      >
+    >
+  >
+
+  allow_serial_evaluation: true
+  advisory <
+    severity: LOW
+    title: "Generic content type detected."
+    description: ""
+    recommendation: ""
+  >
+>
+
+security_test <
+  name: "source code mime detection"
+  issue_type: SOURCE_CODE_MIME
+
+  matching_rule <
+    condition <
+      field: "Content-Type"
+      target: RESPONSE_HEADER_VALUE
+
+      match <
+        method: CONTAINS
+        case_insensitive: true
+        # PHP code
+        value: "application/x-httpd-php-source"
+        # Python
+        value: "application/x-python-code"
+        value: "application/x-bytecode.python"
+        # Java
+        value: "application/java-byte-code"
+        value: "application/x-java-class"
+        # Shell
+        value: "application/x-bsh"
+        value: "application/x-shellscript"
+        value: "application/x-csh"
+        value: "application/x-ksh"
+        value: "application/x-shar"
+        value: "text/x-script.sh"
+        value: "text/x-script.csh"
+        value: "text/x-script.ksh"
+        # Perl
+        value: "text/x-script.perl"
+        value: "text/x-script.perl-module"
+        # Elisp
+        value: "text/x-script.elisp"
+        value: "application/x-bytecode.elisp"
+        # C C++
+        value: "text/x-c"
+      >
+    >
+  >
+
+  allow_serial_evaluation: true
+  advisory <
+    severity: MODERATE
+    title: "A source code mime was discovered"
+    description: ""
+    recommendation: ""
+  >
+>
+
+security_test <
+  name: "phpinfo detected"
+  issue_type: INFORMATION_LEAK
+
+  matching_rule <
+    condition <
+      target: RESPONSE_BODY
+
+      match <
+        method: CONTAINS
+        value: "<title>phpinfo()</title>"
+        value: "phpinfo()</title><meta name=\"ROBOTS\""
+      >
+      match <
+        method: CONTAINS
+        value: "<tr><td class=\"e\">open_basedir</td><td class=\"v\">"
+      >
+    >
+  >
+
+  allow_serial_evaluation: true
+  advisory <
+    severity: LOW
+    title: "Detected a phpinfo() information leak."
+    description: ""
+    recommendation: ""
+  >
+>
+
+security_test <
+  name: "php application error"
+  issue_type: APPLICATION_ERROR
+
+  matching_rule <
+    condition <
+      target: RESPONSE_BODY
+
+      match <
+        method: REGEX
+        value: ">(Fatal error|Parse error|Warning|Notice)</\\w>:.*</\\w> on line <\\w>\\d*</"
+      >
+    >
+  >
+
+  allow_serial_evaluation: true
+  advisory <
+    severity: LOW
+    title: "An application error was discovered"
+    description: ""
+    recommendation: ""
+  >
+>
+
+security_test <
+  name: "stacktrace information leak"
+  issue_type: STACKTRACE_LEAK
+
+  matching_rule <
+    condition <
+      target: RESPONSE_BODY
+
+      match <
+        method: CONTAINS
+        value: "<font face=\"Arial\" size=2>error '"  # Microsoft runtime
+        value: "[an error occurred while processing"  # SHTML error
+        value: "Traceback (most recent call last):"   # Python stacktrace
+        value: "<title>JRun Servlet Error</title>"    # JRun servlet error
+        value: "<b>type</b> Exception report</p><p>"  # Java server exception
+        value: "at java.lang.Thread.run(Thread.java:" # Java runtime stacktrace
+      >
+    >
+  >
+
+  allow_serial_evaluation: true
+  advisory <
+    severity: LOW
+    title: "Detected an application stacktrace"
+    description: ""
+    recommendation: ""
+  >
+>

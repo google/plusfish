@@ -1,0 +1,67 @@
+// Messages for response matching.
+
+syntax = "proto2";
+
+package plusfish;
+
+// Defines how the HTTP response should be evaluated to determine if the test is
+// positive (e.g. was able exploit a directory traversal).
+message MatchRule {
+  enum Method {
+    NONE = 0;
+    CONTAINS = 1;
+    REGEX = 3;
+    EQUALS = 4;
+    TIMING = 5;
+    PREFIX = 6;
+  }
+
+  enum Target {
+    UNSPECIFIED = 0;
+    // Match the response body.
+    RESPONSE_BODY = 1;
+    // Match a header value. Requires the match_field to be set.
+    RESPONSE_HEADER_VALUE = 2;
+    // Match the request URL.
+    REQUEST_URL = 3;
+  }
+
+  message Match {
+    // How to match the string.
+    optional Method method = 1;
+    // The string(s) to find in the content. Multiple strings are treated as
+    // with an implicit OR operator: only one of them has to match.
+    // TODO move next 3 fields to a message.
+    repeated string value = 2;
+    // Set to true to enable case insensitive matching.
+    optional bool case_insensitive = 3;
+    // Set to true when the match is expected not to find the string.
+    optional bool negative_match = 4;
+    // Match request timing.
+    optional Timing timing = 5;
+  }
+
+  message Condition {
+    // Where to match it against.
+    optional Target target = 1;
+    // How the matching should be done (field, value).
+    repeated Match match = 2;
+    // For some targets, a match field has to be specified.
+    // It limits the matching to the value of the indicated field.
+    optional string field = 3;
+  }
+
+  message Timing {
+    // The maximum and minimum request durations that are expected for this
+    // test. When a payload is expected to delay the request with an additional
+    // 5 seconds, the min value here is 5000 and the max value can be set to
+    // 6000.
+    optional uint32 min_duration_ms = 1;
+    // This maximum amount of time a request is expected to take.
+    optional uint32 max_duration_ms = 2;
+  }
+
+  // Multiple conditions are treated as an AND. All of the conditions have to
+  // match positively for the whole match rule to be considered positive.
+  repeated Condition condition = 1;
+}

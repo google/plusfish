@@ -1,0 +1,26 @@
+// Holds message for plusfish protobuf reporting.
+syntax = "proto2";
+
+package plusfish;
+
+import "http_request.proto";
+import "http_response.proto";
+import "issue_details.proto";
+
+// The reporting types.
+enum ReportType {
+  UNSPECIFIED = 0;
+  TEXT = 1;  // A text report.
+  JSON = 2;  // A JSON report.
+};
+
+// A single report item.
+message ReportItem {
+  // The default request (template) as issued by the crawler.
+  optional HttpRequest request = 1;
+  // The default response.
+  optional HttpResponse response = 2;
+  // Any issues that were discovered during the tests. These issues also hold
+  // their specific request/response pairs.
+  repeated IssueDetails issue = 3;
+}

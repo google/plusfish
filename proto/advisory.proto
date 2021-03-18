@@ -1,0 +1,22 @@
+// Contains the plusfish advisory message.
+
+syntax = "proto2";
+
+import "issue_details.proto";
+import "severity.proto";
+
+package plusfish;
+
+message Advisory {
+  // The issue type for which this advisory was written.
+  optional IssueDetails.IssueType issue_type = 1;
+  // Indicates how bad a detection is.
+  optional Severity severity = 2 [default = MODERATE];
+  // The title of the issue.
+  optional string title = 3;
+  // A more detailed description of the problem. This description should also
+  // motivate the severity assignment.
+  optional string description = 4;
+  // A detailed description on how the detected problem can be fixed.
+  optional string recommendation = 5;
+}

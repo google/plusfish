@@ -1,0 +1,6 @@
+# Include the owners of google3 for emergencies and Google-wide changes.
+heinenn
+timothe
+file://depot/google3/OWNERS
+
+mdb-group:isa-assessments-team

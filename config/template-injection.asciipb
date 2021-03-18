@@ -1,0 +1,52 @@
+# This configuration holds security checks for remote template injection
+# vulnerabilities.
+#
+security_test <
+  name: "template injection (django/jinja)"
+  issue_type: TEMPLATE_INJECTION
+
+  generator_rule <
+    method: APPEND_TO_VALUE
+    method: SET_VALUE
+    encoding: NONE
+    encoding: URL
+
+    target <
+      type: URL_PARAMS
+    >
+    target <
+      type: BODY_PARAMS
+    >
+    target <
+      type: PATH_ELEMENTS
+      last_field_only: true
+    >
+
+    payload <
+      type: STRING
+      arg: "plus{{21*2}}fish{{3*33}}"
+      arg: "plus{%21*2%}fish{%3*33%}"
+      arg: "plus{!21*2!}fish{!3*33!}"
+    >
+  >
+
+  matching_rule <
+    condition <
+      target: RESPONSE_BODY
+
+      match <
+        method: CONTAINS
+        value: "plus42fish5559060566555523"
+        case_insensitive: true
+      >
+    >
+  >
+
+  allow_serial_evaluation: true
+  advisory <
+    severity: HIGH
+    title: "A template injection vulnerability was detected (django/jinja)."
+    description: ""
+    recommendation: ""
+  >
+>

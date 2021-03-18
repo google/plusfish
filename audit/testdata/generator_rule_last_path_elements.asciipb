@@ -1,0 +1,10 @@
+method: PREFIX_VALUE
+encoding: NONE
+target <
+  type: PATH_ELEMENTS
+  last_field_only: true
+>
+payload <
+  type: STRING
+  arg: "<XSS>"
+>

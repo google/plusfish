@@ -1,0 +1,11 @@
+method: SET_VALUE
+method: APPEND_TO_VALUE
+encoding: NONE
+target <
+  type: URL_PARAMS
+>
+payload <
+  type: STRING
+  arg: "../../../etc/passwd"
+  arg: "/etc/passwd"
+>

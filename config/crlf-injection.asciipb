@@ -1,0 +1,50 @@
+# This configuration holds security checks for CRLF injection vulnerabilities.
+#
+security_test <
+  name: "crlf header injection"
+
+  issue_type: CRLF_INJECTION
+
+  generator_rule <
+    method: APPEND_TO_VALUE
+    method: SET_VALUE
+    encoding: NONE
+    encoding: HTML
+
+    target <
+      type: PATH_ELEMENTS
+    >
+    target <
+      type: URL_PARAMS
+    >
+    target <
+      type: BODY_PARAMS
+    >
+
+    payload <
+      type: STRING
+      arg: "%0D%0Aplusfish:%20plusfish_crlf_check%0D%0AConnection:close%0d%0a"
+    >
+  >
+
+  matching_rule <
+    condition <
+      target: RESPONSE_HEADER_VALUE
+      field: "plusfish"
+
+      match <
+        method: CONTAINS
+        value: "plusfish_crlf_check"
+        case_insensitive: true
+      >
+    >
+  >
+
+  allow_serial_evaluation: true
+  advisory <
+    severity: HIGH
+    title: "A CRLF header injection vulnerability was detected."
+    description: ""
+    recommendation: ""
+  >
+>

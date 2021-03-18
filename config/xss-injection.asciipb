@@ -1,0 +1,150 @@
+# This configuration holds security checks for XSS injection tests.
+#
+security_test <
+  name: "XSS tag injection"
+  issue_type: XSS_REFLECTED_TAG
+
+  generator_rule <
+    method: APPEND_TO_VALUE
+    method: PREFIX_VALUE
+    method: SET_VALUE
+    encoding: NONE
+    encoding: URL
+    encoding: HTML
+
+    target <
+      type: HEADERS
+      target_name: "User-Agent"
+    >
+    target <
+      type: URL_PARAMS
+    >
+    target <
+      type: PATH_ELEMENTS
+      last_field_only: true
+    >
+
+    target <
+      type: BODY_PARAMS
+    >
+
+    # TODO: make 12345 a request ID so that we can detect stored XSS
+    #   vulnerabilities.
+    payload <
+      type: STRING
+      arg: "<plus12345fish>"
+      arg: "--><plus12345fish><!--"
+      arg: "\"><plus12345fish>"
+      arg: "\'><plus12345fish>"
+      arg: "</textarea><plus12345fish>"
+      arg: "</pre><plus12345fish>"
+      arg: "</title><plus12345fish>"
+    >
+  >
+
+  # No explicit matching is needed. XSS matching is not only perfomed on
+  # security test responses. We perform it on all HTML responses in order to
+  # detect stored XSS issues.
+
+  allow_serial_evaluation: true
+  advisory <
+    severity: HIGH
+    title: "XSS vulnerability detected: injected element."
+    description: ""
+    recommendation: ""
+  >
+>
+
+security_test <
+  name: "XSS attribute injection"
+  issue_type: XSS_REFLECTED_ATTRIBUTE
+
+  generator_rule <
+    method: APPEND_TO_VALUE
+    method: PREFIX_VALUE
+    method: SET_VALUE
+    encoding: NONE
+    encoding: URL
+    encoding: HTML
+
+    target <
+      type: HEADERS
+      target_name: "User-Agent"
+    >
+    target <
+      type: URL_PARAMS
+    >
+    target <
+      type: PATH_ELEMENTS
+      last_field_only: true
+    >
+
+    target <
+      type: BODY_PARAMS
+    >
+
+    # TODO: make 12345 a request ID so that we can detect stored XSS
+    #   vulnerabilities.
+    payload <
+      type: STRING
+      arg: "\" plus12345fish=\""
+      arg: "' plus12345fish='"
+      arg: "';plus123fish;';plus123fish"
+      arg: "\";plus123fish;\";plus123fish"
+    >
+  >
+
+  # No explicit matching is needed. XSS matching is not only perfomed on
+  # security test responses. We perform it on all HTML responses in order to
+  # detect stored XSS issues.
+
+  allow_serial_evaluation: true
+  advisory <
+    severity: HIGH
+    title: "XSS vulnerability detected: injected attribute."
+    description: ""
+    recommendation: ""
+  >
+>
+
+security_test <
+  name: "XSS javascript scheme injection"
+  issue_type: XSS_REFLECTED_ATTRIBUTE
+
+  generator_rule <
+    method: PREFIX_VALUE
+    method: SET_VALUE
+    encoding: NONE
+    encoding: URL
+
+    target <
+      type: HEADERS
+      target_name: "User-Agent"
+    >
+    target <
+      type: URL_PARAMS
+    >
+    target <
+      type: BODY_PARAMS
+    >
+
+    # TODO: make 12345 a request ID so that we can detect stored XSS
+    #   vulnerabilities.
+    payload <
+      type: STRING
+      arg: "javascript:plus123fish;"
+    >
+  >
+
+  # No explicit matching is needed. XSS matching is not only perfomed on
+  # security test responses. We perform it on all HTML responses in order to
+  # detect stored XSS issues.
+
+  allow_serial_evaluation: true
+  advisory <
+    severity: MODERATE
+    title: "XSS via javascript: URL is possible."
+    description: ""
+    recommendation: ""
+  >
+>

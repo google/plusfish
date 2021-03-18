@@ -1,0 +1,46 @@
+# This first test is missing a matching_rule.
+security_test <
+  generator_rule <
+    method: APPEND_TO_VALUE
+
+    encoding: NONE
+
+    target <
+      type: URL_PARAMS
+      target_name: "file"
+    >
+
+    payload <
+      type: STRING
+      arg: "../../../etc/passwd"
+      arg: "/etc/passwd"
+    >
+  >
+  allow_serial_evaluation: true
+>
+security_test <
+  generator_rule <
+    method: SET_VALUE
+    encoding: URL
+
+    target <
+      type: URL_PARAMS
+    >
+
+    payload <
+      type: STRING
+      arg: "foo"
+      arg: "bar"
+    >
+  >
+  allow_serial_evaluation: true
+  matching_rule <
+    condition <
+      target: RESPONSE_BODY
+      match <
+        value: "foobar"
+        method: CONTAINS
+      >
+    >
+  >
+>

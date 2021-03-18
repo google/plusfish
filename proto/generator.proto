@@ -1,0 +1,82 @@
+// Messages for request generation.
+
+syntax = "proto2";
+
+package plusfish;
+
+message GeneratorRule {
+  // The payload target defines where the generator has to inject the payload.
+  message PayloadTarget {
+    enum TargetType {
+      UNKNOWN = 0;
+      HEADERS = 1;
+      URL_PARAMS = 2;
+      BODY_PARAMS = 3;
+      PATH_ELEMENTS = 4;
+    }
+
+    // If you chose the type "headers" then all headers will be tested. If
+    // you chose headers and target_name = "Cookie" then only cookie is tested.
+    optional TargetType type = 1;
+    // Sometimes an entire group might be too much. The names allow specific
+    // fields to be tested while leaving others untouched.
+    repeated string target_name = 2;
+    // When true, only inject in the last field.
+    optional bool last_field_only = 3;
+  }
+
+  // Defines the payload.
+  message Payload {
+    enum PayloadType {
+      UNKNOWN = 0;
+      // For static string payloads.
+      STRING = 1;
+      // A generator that creates numbers between a range. This generator
+      // expects the lower value of the range in arg[0] and the upper value in
+      // arg[1]. For for a range of 1-999, arg[0]=1 and arg[1]=999.
+      NUMBER_RANGE = 2;
+      // Candidate to add in the future: string mutator/generator.
+    }
+
+    // The type of payload.
+    optional PayloadType type = 1;
+    // The arguments for the payload generator. This can be a repeated list of
+    // strings (for the string generator) or could indicate a range for the
+    // number generator (e.g. arg[0] = 1 and arg[1] = 100).
+    repeated string arg = 2;
+  }
+
+  // Defines how the payload should be injected.
+  enum InjectionMethod {
+    INVALID = 0;
+    // The injection target will be set to this value.
+    SET_VALUE = 1;
+    // Append to the existing value. When no value exists, this will be
+    // a no-op as that scenario is already covered by the SET_VALUE type.
+    APPEND_TO_VALUE = 2;
+    // Prefix the payload to the existing value.
+    PREFIX_VALUE = 3;
+  }
+
+  // Specifies the encoding that needs to be applied to the payload.
+  enum EncodingType {
+    // The encoding that seems best fit for the tested field is used. E.g. for a
+    // URL parameter this will be URL encoding.
+    AUTO = 0;  // Not implemented yet.
+    // No encoding is used: the payload is send untouched/raw.
+    NONE = 1;
+    URL = 2;
+    HTML = 3;
+  }
+
+  // How the payload should be injected. If multiple methods are specified, the
+  // payload will be tested once for each method.
+  repeated InjectionMethod method = 1;
+  // The types of encodings that the payload should be tested with. Each
+  // encoding it tested on it's own.
+  repeated EncodingType encoding = 2;
+  // Where to inject the payload.
+  repeated PayloadTarget target = 3;
+  // The payload definition for this test.
+  optional Payload payload = 4;
+}
