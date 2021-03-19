@@ -19,7 +19,7 @@
 #include <vector>
 
 #include <glog/logging.h>
-#include "base/macros.h"
+#include "opensource/deps/base/macros.h"
 #include "absl/container/node_hash_set.h"
 #include "absl/strings/match.h"
 #include <gumbo.h>

@@ -1,10 +1,13 @@
 NOTE: This is not an officially supported Google product
 
+
+```shell
  ____  _            __ _     _
 |  _ \| |_   _ ___ / _(_)___| |__
 | |_) | | | | / __| |_| / __| '_ \
 |  __/| | |_| \__ \  _| \__ \ | | |
 |_|   |_|\__,_|___/_| |_|___/_| |_|
+```
 
 
 ## Introduction
@@ -77,20 +80,20 @@ problems.
 
 ## Things we want to add
 
-### LARGE: Javascript execution (v8)
+#### LARGE: Javascript execution (v8)
 We will add a different HTML parser with v8 dom bindings in order to better
 support scans of Javascript heavy web sites.
 
-### SMALL: HTML reporting
+#### SMALL: HTML reporting
 Nobody likes reading XML. Adding an HTML report option will be added soon after
 the public release of this project.
 
-### MEDIUM: Refactor all tests
+#### MEDIUM: Refactor all tests
 Not all tests in the opensource repo can be build and run. We intend to fix this
 soon after the public release because it is crucial for making the GitHub repo
 our main development repo.
 
-### MEDIUM: More security tests
+#### MEDIUM: More security tests
 The currently provided security tests are not complete and this is an area where
 security enthusiasts in the community can really step in.  PR's for new security
 checks are welcome!

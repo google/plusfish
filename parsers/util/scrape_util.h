@@ -18,8 +18,8 @@
 #include <memory>
 #include <string>
 
-#include "base/integral_types.h"
 #include "absl/container/node_hash_set.h"
+#include "opensource/deps/base/integral_types.h"
 #include "proto/http_common.pb.h"
 #include "proto/issue_details.pb.h"
 

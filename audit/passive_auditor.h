@@ -18,7 +18,7 @@
 #include <memory>
 #include <unordered_map>
 
-#include "base/macros.h"
+#include "opensource/deps/base/macros.h"
 #include "audit/generic_response_matcher.h"
 #include "audit/matchers/matcher_factory.h"
 #include "proto/issue_details.pb.h"

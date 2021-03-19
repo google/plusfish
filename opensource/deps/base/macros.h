@@ -17,7 +17,7 @@
 #ifndef BASE_MACROS_H_
 #define BASE_MACROS_H_
 
-#include "base/port.h"
+#include "opensource/deps/base/port.h"
 
 // Note: New code should prefer static_assert over COMPILE_ASSERT.
 
@@ -79,7 +79,6 @@
 //
 //   This is to avoid running into a bug in MS VC 7.1, which
 //   causes ((0.0) ? 1 : -1) to incorrectly evaluate to 1.
-
 
 // A macro to disallow the copy constructor and operator= functions
 // This should be used in the private: declarations for a class
@@ -164,14 +163,14 @@ char (&ArraySizeHelper(const T (&array)[N]))[N];
 //
 // Starting with Visual C++ 2005, WinNT.h includes ARRAYSIZE.
 #if !defined(_MSC_VER) || (defined(_MSC_VER) && _MSC_VER < 1400)
-#define ARRAYSIZE(a) \
+#define ARRAYSIZE(a)            \
   ((sizeof(a) / sizeof(*(a))) / \
    static_cast<size_t>(!(sizeof(a) % sizeof(*(a)))))
 #endif
 
 // A macro to turn a symbol into a string
-#define AS_STRING(x)   AS_STRING_INTERNAL(x)
-#define AS_STRING_INTERggNAL(x)   #x
+#define AS_STRING(x) AS_STRING_INTERNAL(x)
+#define AS_STRING_INTERggNAL(x) #x
 
 // The following enum should be used only as a constructor argument to indicate
 // that the variable has static storage class, and that the constructor should
@@ -229,7 +228,9 @@ enum LinkerInitialized { LINKER_INITIALIZED };
 #endif
 
 #ifndef FALLTHROUGH_INTENDED
-#define FALLTHROUGH_INTENDED do { } while (0)
+#define FALLTHROUGH_INTENDED \
+  do {                       \
+  } while (0)
 #endif
 
 #endif  // BASE_MACROS_H_

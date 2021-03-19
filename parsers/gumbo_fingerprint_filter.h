@@ -19,7 +19,7 @@
 #include <string>
 #include <vector>
 
-#include "base/macros.h"
+#include "opensource/deps/base/macros.h"
 #include <gumbo.h>
 #include "parsers/gumbo_filter.h"
 #include "util/html_fingerprint.h"

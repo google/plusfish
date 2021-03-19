@@ -17,7 +17,7 @@
 
 #include <string>
 
-#include "base/macros.h"
+#include "opensource/deps/base/macros.h"
 #include "proto/http_common.pb.h"
 
 namespace plusfish {

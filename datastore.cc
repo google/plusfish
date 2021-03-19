@@ -14,23 +14,24 @@
 
 #include "datastore.h"
 
+#include <glog/logging.h>
+#include <google/protobuf/util/message_differencer.h>
+
 #include <functional>
 #include <memory>
 
-#include "base/integral_types.h"
-#include <glog/logging.h>
-#include <google/protobuf/util/message_differencer.h>
 #include "absl/flags/flag.h"
+#include "opensource/deps/base/integral_types.h"
 #include "pivot.h"
 #include "proto/http_common.pb.h"
 #include "proto/http_request.pb.h"
 #include "proto/issue_details.pb.h"
 #include "proto/severity.pb.h"
+#include "re2/re2.h"
 #include "request.h"
 #include "response.h"
 #include "util/html_fingerprint.h"
 #include "util/http_util.h"
-#include "re2/re2.h"
 
 ABSL_FLAG(int32_t, max_issues_per_check_per_url, 3,
           "Limit the total amount of issues a single security check can "
@@ -244,7 +245,8 @@ bool DataStore::AddIssueDetails(const int64 request_id,
     if (issue_map.find(issue->type()) != issue_map.end()) {
       for (const auto& issue_entry : issue_map[issue->type()]) {
         // When there is an exact match, return.
-        if (google::protobuf::util::MessageDifferencer::Equals(*issue_entry, *issue)) {
+        if (google::protobuf::util::MessageDifferencer::Equals(*issue_entry,
+                                                               *issue)) {
           return false;
         }
       }

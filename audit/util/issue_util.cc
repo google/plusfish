@@ -14,12 +14,13 @@
 
 #include "audit/util/issue_util.h"
 
+#include <glog/logging.h>
+
 #include <memory>
 #include <unordered_set>
-#include "base/basictypes.h"
 
-#include <glog/logging.h>
 #include "absl/container/node_hash_set.h"
+#include "opensource/deps/base/basictypes.h"
 
 namespace plusfish {
 namespace util {

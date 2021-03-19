@@ -14,15 +14,14 @@
 
 #include "curl.h"
 
+#include <curl/curl.h>
+#include <glog/logging.h>
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
 
-#include <curl/curl.h>
-#include <glog/logging.h>
-#include "base/integral_types.h"
-#include "request.h"
-#include "util/http_util.h"
+#include "opensource/deps/base/integral_types.h"
+//#include "util/http_util.h"
 
 namespace plusfish {
 

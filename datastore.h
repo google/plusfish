@@ -23,16 +23,16 @@
 #include <unordered_set>
 #include <vector>
 
-#include "base/integral_types.h"
-#include "base/macros.h"
 #include "absl/base/thread_annotations.h"
 #include "absl/container/node_hash_set.h"
 #include "absl/synchronization/mutex.h"
+#include "opensource/deps/base/integral_types.h"
+#include "opensource/deps/base/macros.h"
 #include "proto/http_request.pb.h"
 #include "proto/issue_details.pb.h"
+#include "re2/re2.h"
 #include "request.h"
 #include "util/html_fingerprint.h"
-#include "re2/re2.h"
 
 namespace plusfish {
 

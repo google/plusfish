@@ -17,7 +17,7 @@
 #include <csignal>
 #include <string>
 
-#include "base/integral_types.h"
+#include "opensource/deps/base/integral_types.h"
 #include "gmock/gmock.h"
 #include <gtest/gtest.h>
 #include "gtest/gtest.h"

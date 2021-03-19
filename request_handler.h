@@ -15,7 +15,7 @@
 #ifndef PLUSFISH_REQUEST_HANDLER_H_
 #define PLUSFISH_REQUEST_HANDLER_H_
 
-#include "base/macros.h"
+#include "opensource/deps/base/macros.h"
 
 namespace plusfish {
 
@@ -27,7 +27,7 @@ class RequestHandlerInterface {
   virtual ~RequestHandlerInterface() {}
 
  protected:
-  RequestHandlerInterface() { }
+  RequestHandlerInterface() {}
 
  private:
   DISALLOW_COPY_AND_ASSIGN(RequestHandlerInterface);

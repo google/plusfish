@@ -2,8 +2,8 @@
 
 syntax = "proto2";
 
-import "issue_details.proto";
-import "severity.proto";
+import "proto/issue_details.proto";
+import "proto/severity.proto";
 
 package plusfish;
 

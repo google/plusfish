@@ -15,7 +15,7 @@
 #include "util/config.h"
 
 #include "gtest/gtest.h"
-#include "proto/http_request.proto.h"
+#include "proto/http_request.pb.h"
 #include "proto/security_check.pb.h"
 #include "request.h"
 

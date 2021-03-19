@@ -15,7 +15,7 @@
 #ifndef PLUSFISH_AUDIT_GENERIC_GENERATOR_H_
 #define PLUSFISH_AUDIT_GENERIC_GENERATOR_H_
 
-#include "base/macros.h"
+#include "opensource/deps/base/macros.h"
 
 #include <vector>
 

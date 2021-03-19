@@ -22,7 +22,7 @@
 #include <memory>
 #include <sstream>
 
-#include "base/integral_types.h"
+#include "opensource/deps/base/integral_types.h"
 #include <glog/logging.h>
 #include "absl/flags/flag.h"
 #include "absl/synchronization/mutex.h"

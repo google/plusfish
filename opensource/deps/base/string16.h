@@ -38,7 +38,7 @@
 
 #include <string>
 
-#include "base/basictypes.h"
+#include "opensource/deps/base/basictypes.h"
 
 #ifdef WIN32
 
@@ -69,24 +69,16 @@ struct string16_char_traits {
   typedef mbstate_t state_type;
   typedef std::fpos<state_type> pos_type;
 
-  static void assign(char_type& c1, const char_type& c2) {
-    c1 = c2;
-  }
+  static void assign(char_type& c1, const char_type& c2) { c1 = c2; }
 
-  static bool eq(const char_type& c1, const char_type& c2) {
-    return c1 == c2;
-  }
-  static bool lt(const char_type& c1, const char_type& c2) {
-    return c1 < c2;
-  }
+  static bool eq(const char_type& c1, const char_type& c2) { return c1 == c2; }
+  static bool lt(const char_type& c1, const char_type& c2) { return c1 < c2; }
 
   static int compare(const char_type* s1, const char_type* s2, size_t n) {
     return c16memcmp(s1, s2, n);
   }
 
-  static size_t length(const char_type* s) {
-    return c16len(s);
-  }
+  static size_t length(const char_type* s) { return c16len(s); }
 
   static const char_type* find(const char_type* s, size_t n,
                                const char_type& a) {
@@ -109,26 +101,21 @@ struct string16_char_traits {
     return eq_int_type(c, eof()) ? 0 : c;
   }
 
-  static char_type to_char_type(const int_type& c) {
-    return char_type(c);
-  }
+  static char_type to_char_type(const int_type& c) { return char_type(c); }
 
-  static int_type to_int_type(const char_type& c) {
-    return int_type(c);
-  }
+  static int_type to_int_type(const char_type& c) { return int_type(c); }
 
   static bool eq_int_type(const int_type& c1, const int_type& c2) {
     return c1 == c2;
   }
 
-  static int_type eof() {
-    return static_cast<int_type>(EOF);
-  }
+  static int_type eof() { return static_cast<int_type>(EOF); }
 };
 
 }  // namespace base
 
-// The std::string class will be explicitly instantiated only once, in string16.cc.
+// The std::string class will be explicitly instantiated only once, in
+// string16.cc.
 //
 // std::basic_string<> in GNU libstdc++ contains a static data member,
 // _S_empty_rep_storage, to represent empty strings.  When an operation such
@@ -141,10 +128,10 @@ struct string16_char_traits {
 // as a coalesced symbol, meaning that the linker will combine multiple
 // instances into a single one when generating output.
 //
-// If a std::string class is used by multiple shared libraries, a problem occurs.
-// Each library will get its own copy of _S_empty_rep_storage.  When strings
-// are passed across a library boundary for alteration or destruction, memory
-// errors will result.  GNU libstdc++ contains a configuration option,
+// If a std::string class is used by multiple shared libraries, a problem
+// occurs. Each library will get its own copy of _S_empty_rep_storage.  When
+// strings are passed across a library boundary for alteration or destruction,
+// memory errors will result.  GNU libstdc++ contains a configuration option,
 // --enable-fully-dynamic-string (_GLIBCXX_FULLY_DYNAMIC_STRING), which
 // disables the static data member optimization, but it's a good optimization
 // and non-STL code is generally at the mercy of the system's STL
@@ -154,9 +141,9 @@ struct string16_char_traits {
 //
 // See also http://gcc.gnu.org/bugzilla/show_bug.cgi?id=24196 .
 //
-// To avoid problems, std::string classes need to be explicitly instantiated only
-// once, in exactly one library.  All other std::string users see it via an "extern"
-// declaration.  This is precisely how GNU libstdc++ handles
+// To avoid problems, std::string classes need to be explicitly instantiated
+// only once, in exactly one library.  All other std::string users see it via an
+// "extern" declaration.  This is precisely how GNU libstdc++ handles
 // std::basic_string<char> (string) and std::basic_string<wchar_t> (wstring).
 //
 // This also works around a Mac OS X linker bug in ld64-85.2.1 (Xcode 3.1.2),

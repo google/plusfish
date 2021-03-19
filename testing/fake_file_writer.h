@@ -16,8 +16,9 @@
 #define PLUSFISH_UTIL_FAKEFILEWRITER_H_
 
 #include <glog/logging.h>
-#include "base/macros.h"
+
 #include "gmock/gmock.h"
+#include "opensource/deps/base/macros.h"
 #include "util/file_writer.h"
 
 namespace plusfish {

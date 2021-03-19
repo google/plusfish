@@ -16,10 +16,11 @@
 #define PLUSFISH_CURL_H_
 
 #include <curl/curl.h>
-#include "base/integral_types.h"
-#include "base/macros.h"
 
-#include "request.h"
+#include <string>
+
+#include "opensource/deps/base/integral_types.h"
+#include "opensource/deps/base/macros.h"
 #include "util/curl_util.h"
 
 // The callback function (pointer) used by libcurl to return response data.

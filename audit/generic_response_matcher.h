@@ -17,8 +17,8 @@
 
 #include <map>
 
-#include "base/macros.h"
-#include "base/port.h"
+#include "opensource/deps/base/macros.h"
+#include "opensource/deps/base/port.h"
 #include "audit/matchers/condition_matcher.h"
 #include "audit/matchers/matcher.h"
 #include "audit/matchers/matcher_factory.h"

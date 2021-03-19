@@ -15,7 +15,7 @@
 #ifndef PLUSFISH_AUDIT_GENERIC_SECURITY_CHECK_H_
 #define PLUSFISH_AUDIT_GENERIC_SECURITY_CHECK_H_
 
-#include "base/macros.h"
+#include "opensource/deps/base/macros.h"
 #include "audit/generator.h"
 #include "audit/response_matcher.h"
 #include "audit/security_check.h"

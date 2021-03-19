@@ -17,8 +17,8 @@
 
 #include <string>
 
-#include "base/integral_types.h"
-#include "base/macros.h"
+#include "opensource/deps/base/integral_types.h"
+#include "opensource/deps/base/macros.h"
 
 // The maximum amount of buckets to use for word length counting.
 static const uint8 kMaxFingerprintSize = 16;

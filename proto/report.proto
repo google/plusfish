@@ -3,9 +3,9 @@ syntax = "proto2";
 
 package plusfish;
 
-import "http_request.proto";
-import "http_response.proto";
-import "issue_details.proto";
+import "proto/http_request.proto";
+import "proto/http_response.proto";
+import "proto/issue_details.proto";
 
 // The reporting types.
 enum ReportType {

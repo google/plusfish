@@ -15,10 +15,10 @@
 #ifndef PLUSFISH_UTIL_SIMPLERATELIMITER_H_
 #define PLUSFISH_UTIL_SIMPLERATELIMITER_H_
 
-#include "base/integral_types.h"
-#include "base/macros.h"
 #include "absl/base/thread_annotations.h"
 #include "absl/synchronization/mutex.h"
+#include "opensource/deps/base/integral_types.h"
+#include "opensource/deps/base/macros.h"
 #include "util/ratelimiter.h"
 
 namespace plusfish {

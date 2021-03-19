@@ -14,14 +14,14 @@
 
 #include "curl_http_client.h"
 
+#include <curl/curl.h>
+#include <gtest/gtest.h>
+
 #include <string>
 
-#include "base/init_google.h"
-#include "gmock/gmock.h"
-#include <gtest/gtest.h>
-#include "gtest/gtest.h"
 #include "absl/flags/flag.h"
-#include <curl/curl.h>
+#include "gmock/gmock.h"
+#include "gtest/gtest.h"
 #include "request.h"
 #include "testing/curl_mock.h"
 #include "testing/ratelimiter_mock.h"

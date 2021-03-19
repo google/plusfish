@@ -23,7 +23,7 @@
 #include <string>
 #include <vector>
 
-#include "base/macros.h"
+#include "opensource/deps/base/macros.h"
 #include "proto/http_common.pb.h"
 #include "proto/http_response.pb.h"
 #include "util/html_fingerprint.h"

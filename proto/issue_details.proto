@@ -1,9 +1,9 @@
 // Hold messages that describe plusfish issues.
 syntax = "proto2";
 
-import "http_request.proto";
-import "http_response.proto";
-import "severity.proto";
+import "proto/http_request.proto";
+import "proto/http_response.proto";
+import "proto/severity.proto";
 
 package plusfish;
 

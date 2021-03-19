@@ -15,13 +15,13 @@
 #ifndef PLUSFISH_REPORT_JSON_REPORTER_H_
 #define PLUSFISH_REPORT_JSON_REPORTER_H_
 
+#include <google/protobuf/util/json_util.h>
+
 #include <memory>
 #include <string>
 #include <vector>
 
-#include "base/macros.h"
-#include <google/protobuf/util/json_util.h>
-#include <google/protobuf/util/json_util.h>
+#include "opensource/deps/base/macros.h"
 #include "proto/security_check.pb.h"
 #include "report/reporter.h"
 #include "util/file_writer.h"

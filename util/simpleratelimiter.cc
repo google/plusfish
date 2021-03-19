@@ -14,11 +14,12 @@
 
 #include "util/simpleratelimiter.h"
 
+#include <glog/logging.h>
+
 #include <ctime>
 
-#include "base/integral_types.h"
-#include <glog/logging.h>
 #include "absl/synchronization/mutex.h"
+#include "opensource/deps/base/integral_types.h"
 
 namespace plusfish {
 

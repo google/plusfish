@@ -18,8 +18,8 @@
 #include <memory>
 #include <queue>
 
-#include "base/integral_types.h"
-#include "base/macros.h"
+#include "opensource/deps/base/integral_types.h"
+#include "opensource/deps/base/macros.h"
 #include "absl/base/thread_annotations.h"
 #include "absl/container/node_hash_map.h"
 #include "absl/container/node_hash_set.h"

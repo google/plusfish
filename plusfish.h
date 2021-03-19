@@ -19,7 +19,7 @@
 #include <string>
 #include <vector>
 
-#include "base/macros.h"
+#include "opensource/deps/base/macros.h"
 #include "absl/base/thread_annotations.h"
 #include "absl/synchronization/mutex.h"
 #include "hidden_objects_finder.h"

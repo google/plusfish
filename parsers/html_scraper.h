@@ -18,7 +18,7 @@
 #include <memory>
 #include <vector>
 
-#include "base/macros.h"
+#include "opensource/deps/base/macros.h"
 #include "absl/container/node_hash_set.h"
 #include "parsers/gumbo_parser.h"
 #include "parsers/html_parser.h"

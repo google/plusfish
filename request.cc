@@ -14,17 +14,18 @@
 
 #include "request.h"
 
+#include <glog/logging.h>
+
 #include <ctime>
 #include <unordered_set>
 
-#include "base/integral_types.h"
-#include <glog/logging.h>
 #include "absl/container/node_hash_set.h"
 #include "absl/flags/flag.h"
 #include "absl/strings/str_join.h"
 #include "absl/strings/str_split.h"
 #include "audit/security_check.h"
 #include "datastore.h"
+#include "opensource/deps/base/integral_types.h"
 #include "proto/issue_details.pb.h"
 #include "request_handler.h"
 #include "util/http_util.h"
@@ -38,9 +39,10 @@ namespace {
 // Helper method to compare the names of repeated RequestField's. Returns true
 // when given fields have the exact same set of names. Ignores the field
 // values and order.
-static bool FieldNamesEqual(
-    const google::protobuf::RepeatedPtrField<plusfish::HttpRequest_RequestField>& one,
-    const google::protobuf::RepeatedPtrField<plusfish::HttpRequest_RequestField>& two) {
+static bool FieldNamesEqual(const google::protobuf::RepeatedPtrField<
+                                plusfish::HttpRequest_RequestField>& one,
+                            const google::protobuf::RepeatedPtrField<
+                                plusfish::HttpRequest_RequestField>& two) {
   if (one.size() != two.size()) {
     return false;
   }
@@ -256,7 +258,8 @@ bool Request::Equals(const Request& ref) const {
 
 int Request::ReplaceOrAddExistingField(
     const std::string& name, const std::string& value, bool replace,
-    google::protobuf::RepeatedPtrField<plusfish::HttpRequest_RequestField>* fields) {
+    google::protobuf::RepeatedPtrField<plusfish::HttpRequest_RequestField>*
+        fields) {
   if (!fields->empty()) {
     int updated_fields = 0;
     for (auto& field : *fields) {

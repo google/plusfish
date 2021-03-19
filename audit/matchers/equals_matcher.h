@@ -15,7 +15,7 @@
 #ifndef PLUSFISH_AUDIT_MATCHERS_EQUALS_MATCHER_H_
 #define PLUSFISH_AUDIT_MATCHERS_EQUALS_MATCHER_H_
 
-#include "base/macros.h"
+#include "opensource/deps/base/macros.h"
 #include "audit/matchers/matcher.h"
 #include "proto/matching.pb.h"
 

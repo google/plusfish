@@ -15,8 +15,9 @@
 #ifndef OPS_SECURITY_PENTESTING_SCANNING_PLUSFISH_PARSERS_GUMBO_FILTER_H_
 #define OPS_SECURITY_PENTESTING_SCANNING_PLUSFISH_PARSERS_GUMBO_FILTER_H_
 
-#include "base/macros.h"
 #include <gumbo.h>
+
+#include "opensource/deps/base/macros.h"
 
 namespace plusfish {
 

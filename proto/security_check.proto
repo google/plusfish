@@ -2,10 +2,10 @@
 
 syntax = "proto2";
 
-import "advisory.proto";
-import "generator.proto";
-import "issue_details.proto";
-import "matching.proto";
+import "proto/advisory.proto";
+import "proto/generator.proto";
+import "proto/issue_details.proto";
+import "proto/matching.proto";
 
 package plusfish;
 

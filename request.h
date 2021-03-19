@@ -24,14 +24,14 @@
 #include <unordered_set>
 #include <vector>
 
-#include "base/integral_types.h"
-#include "base/macros.h"
 #include "absl/container/node_hash_set.h"
-#include "src/gurl.h"
+#include "opensource/deps/base/integral_types.h"
+#include "opensource/deps/base/macros.h"
 #include "proto/http_request.pb.h"
 #include "proto/issue_details.pb.h"
 #include "request_handler.h"
 #include "response.h"
+#include "src/gurl.h"
 #include "util/html_fingerprint.h"
 
 namespace plusfish {
@@ -250,7 +250,8 @@ class Request {
   // Does not take ownership.
   int ReplaceOrAddExistingField(
       const std::string& name, const std::string& value, bool replace,
-      google::protobuf::RepeatedPtrField<plusfish::HttpRequest_RequestField>* fields);
+      google::protobuf::RepeatedPtrField<plusfish::HttpRequest_RequestField>*
+          fields);
 
   // Helper method to set the headers that are appropiate for this request.
   void PrepareHeaders();

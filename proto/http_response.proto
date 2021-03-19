@@ -2,7 +2,7 @@
 
 syntax = "proto2";
 
-import "http_common.proto";
+import "proto/http_common.proto";
 
 package plusfish;
 

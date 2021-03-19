@@ -15,7 +15,7 @@
 #ifndef PLUSFISH_REPORT_REPORTER_H_
 #define PLUSFISH_REPORT_REPORTER_H_
 
-#include "base/macros.h"
+#include "opensource/deps/base/macros.h"
 
 namespace plusfish {
 
@@ -40,10 +40,10 @@ class ReporterInterface {
 
   // Report the security check config. Not all reporters are expected to
   // implement this so the default implementation has no logic.
-  virtual void ReportSecurityConfig(const SecurityCheckConfig& config) const { }
+  virtual void ReportSecurityConfig(const SecurityCheckConfig& config) const {}
 
  protected:
-  ReporterInterface() { }
+  ReporterInterface() {}
 
  private:
   DISALLOW_COPY_AND_ASSIGN(ReporterInterface);

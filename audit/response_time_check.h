@@ -15,7 +15,7 @@
 #ifndef PLUSFISH_AUDIT_RESPONSE_TIME_CHECK_H_
 #define PLUSFISH_AUDIT_RESPONSE_TIME_CHECK_H_
 
-#include "base/macros.h"
+#include "opensource/deps/base/macros.h"
 #include "audit/security_check.h"
 #include "proto/issue_details.pb.h"
 #include "proto/severity.pb.h"

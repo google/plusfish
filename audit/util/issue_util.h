@@ -17,9 +17,9 @@
 
 #include <memory>
 #include <unordered_set>
-#include "base/basictypes.h"
 
 #include "absl/container/node_hash_set.h"
+#include "opensource/deps/base/basictypes.h"
 #include "proto/issue_details.pb.h"
 
 namespace plusfish {

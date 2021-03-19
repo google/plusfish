@@ -14,12 +14,13 @@
 
 #include "util/html_fingerprint.h"
 
+#include <glog/logging.h>
+
 #include <cstdint>
 #include <cstdlib>
 #include <string>
 
-#include "base/integral_types.h"
-#include <glog/logging.h>
+#include "opensource/deps/base/integral_types.h"
 
 namespace plusfish {
 

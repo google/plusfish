@@ -18,8 +18,8 @@
 #include <vector>
 #include <memory>
 
-#include "base/macros.h"
-#include "base/port.h"
+#include "opensource/deps/base/macros.h"
+#include "opensource/deps/base/port.h"
 
 namespace plusfish {
 

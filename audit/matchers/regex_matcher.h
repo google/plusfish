@@ -18,7 +18,7 @@
 #include <map>
 #include <memory>
 
-#include "base/macros.h"
+#include "opensource/deps/base/macros.h"
 #include "re2/re2.h"
 #include "audit/matchers/matcher.h"
 #include "proto/matching.pb.h"
